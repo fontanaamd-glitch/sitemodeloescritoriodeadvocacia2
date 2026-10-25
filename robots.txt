@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://indigo-otter-907204.hostingersite.com/sitemap.xml

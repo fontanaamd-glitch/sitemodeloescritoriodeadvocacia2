@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --color-primary: #0B1F3A;
+  --color-primary-dark: #071527;
+  --color-primary-light: #163259;
+  --color-gold: #C5A04F;
+  --color-gold-hover: #D8B463;
+  --color-gold-light: #F4EAD4;
+  --color-gold-dark: #A48135;
+  --color-bg: #F9FAFB;
+  --color-text: #111827;
+  --color-muted: #4B5563;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+.font-serif {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* Custom Selection */
+::selection {
+  background-color: #C5A04F;
+  color: #0B1F3A;
+}
+
+/* Smooth Focus Rings */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid #C5A04F;
+  outline-offset: 2px;
+}
+
+/* Gold Gradient Accents */
+.gold-gradient {
+  background: linear-gradient(135deg, #DFBE72 0%, #C5A04F 50%, #A48135 100%);
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #EAD196 0%, #C5A04F 50%, #B8923E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-border-glow:hover {
+  border-color: rgba(197, 160, 79, 0.6);
+  box-shadow: 0 10px 25px -5px rgba(197, 160, 79, 0.15), 0 8px 10px -6px rgba(11, 31, 58, 0.1);
+}
+
+/* Floating WhatsApp Pulse Animation */
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.18);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+}
+
+.whatsapp-pulse::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 9999px;
+  background-color: rgba(37, 211, 102, 0.5);
+  z-index: -1;
+  animation: pulse-ring 2.2s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0B1F3A;
+}
+::-webkit-scrollbar-thumb {
+  background: #233e63;
+  border-radius: 5px;
+  border: 2px solid #0B1F3A;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C5A04F;
+}
+
+/* Glassmorphism Cards */
+.glass-panel {
+  background: rgba(11, 31, 58, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(197, 160, 79, 0.3);
+}
+
+.glass-panel-subtle {
+  background: rgba(7, 21, 39, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}

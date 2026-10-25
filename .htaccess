@@ -1,0 +1,78 @@
+# ==============================================================================
+# .htaccess — Fontana & Souza Advocacia
+# Servidor de Produção: Apache / LiteSpeed (Hostinger)
+# ==============================================================================
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # 1. FORÇAR HTTPS (Redirecionamento 301 de HTTP para HTTPS)
+    RewriteCond %{HTTPS} off [OR]
+    RewriteCond %{HTTP:X-Forwarded-Proto} =http
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # 2. PADRONIZAR WWW (Redirecionar www para não-www com 301)
+    RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+    RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# 3. PÁGINA 404 PERSONALIZADA (Retorna à home para experiência one-page fluida)
+ErrorDocument 404 /index.html
+
+# 4. COMPRESSÃO GZIP / DEFLATE PARA PERFORMANCE
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/json
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# 5. CACHE DE NAVEGADOR & CACHE-BUSTING
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 1 month"
+
+    # HTML: NUNCA armazenar em cache (0 segundos)
+    ExpiresByType text/html "access plus 0 seconds"
+
+    # CSS e JavaScript: 1 semana (604.800s)
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType text/javascript "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+    ExpiresByType application/x-javascript "access plus 1 week"
+
+    # Imagens e Mídias: 1 mês (2.592.000s)
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType image/x-icon "access plus 1 month"
+    ExpiresByType image/vnd.microsoft.icon "access plus 1 month"
+</IfModule>
+
+<IfModule mod_headers.c>
+    # HTML: Forçar Cache-Control sem cache para refletir alterações instantaneamente no código
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+
+    # CSS e JS: 1 semana
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "max-age=604800, public"
+    </FilesMatch>
+
+    # Imagens e Mídias: 1 mês
+    <FilesMatch "\.(jpg|jpeg|png|webp|svg|ico|gif)$">
+        Header set Cache-Control "max-age=2592000, public"
+    </FilesMatch>
+</IfModule>
